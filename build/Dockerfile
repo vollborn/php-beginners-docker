@@ -25,4 +25,8 @@ RUN apt-get install nginx -y
 
 ADD nginx.conf /etc/nginx/sites-enabled
 
-CMD service php${PHP_VERSION}-fpm start && nginx -g "daemon off;"
+RUN echo service php${PHP_VERSION}-fpm start >> /startup.sh && \
+    echo 'nginx -g "daemon off;"' >> /startup.sh && \
+    chmod +x /startup.sh
+
+CMD /startup.sh
